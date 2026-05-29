@@ -22,4 +22,7 @@ export class Producto {
 
   @Column({ nullable: true })
   imagen!: string;
+
+  @Column({ default: 'Otros' })
+  categoria!: string;
 }
