@@ -10,4 +10,7 @@ export class Usuario {
 
   @Column()
   password!: string;
+
+  @Column({ default: 'admin' })
+  rol!: string;
 }
