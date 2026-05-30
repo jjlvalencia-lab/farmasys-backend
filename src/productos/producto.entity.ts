@@ -20,7 +20,7 @@ export class Producto {
   @Column({ default: 0 })
   stock!: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   imagen!: string;
 
   @Column({ default: 'Otros' })
