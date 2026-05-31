@@ -13,4 +13,7 @@ export class Usuario {
 
   @Column({ default: 'admin' })
   rol!: string;
+
+  @Column({ nullable: true })
+  nombreCompleto!: string;
 }
