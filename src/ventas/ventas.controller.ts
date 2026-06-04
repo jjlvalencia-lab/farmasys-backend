@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { VentasService } from './ventas.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -16,6 +16,17 @@ export class VentasController {
   @Get()
   findAll() {
     return this.ventasService.findAll();
+  }
+
+  @Get('cierre')
+  getCierre(@Query('fecha') fecha: string) {
+    const hoy = fecha || new Date().toISOString().split('T')[0];
+    return this.ventasService.getCierreDelDia(hoy);
+  }
+
+  @Get('fecha')
+  findByFecha(@Query('fecha') fecha: string) {
+    return this.ventasService.findByFecha(fecha);
   }
 
   @Get(':id')

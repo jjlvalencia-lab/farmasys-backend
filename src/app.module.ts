@@ -11,7 +11,7 @@ import { VentasModule } from './ventas/ventas.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postgres',
+      password: 'xavier444',
       database: 'farmasys_db',
       autoLoadEntities: true,
       synchronize: true,

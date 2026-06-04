@@ -14,6 +14,12 @@ export class Producto {
   @Column('decimal', { precision: 10, scale: 2, default: 0 })
   precioCosto!: number;
 
+  @Column({ default: 1 })
+  unidadesPorCaja!: number;
+
+  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  precioCaja!: number;
+
   @Column()
   lote!: string;
 
