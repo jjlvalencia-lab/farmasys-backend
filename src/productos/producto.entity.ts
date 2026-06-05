@@ -46,4 +46,16 @@ export class Producto {
 
   @Column({ default: 'Otros' })
   categoria!: string;
+
+  @Column({ default: false })
+  enPromocion!: boolean;
+
+  @Column('decimal', { precision: 5, scale: 2, default: 0 })
+  descuento!: number;
+
+  @Column({ nullable: true })
+  promocionInicio!: string;
+
+  @Column({ nullable: true })
+  promocionFin!: string;
 }

@@ -14,6 +14,16 @@ export class ProductosController {
     return this.productosService.findAll();
   }
 
+  @Get('rotacion')
+  getRotacion() {
+    return this.productosService.getRotacion();
+  }
+
+  @Get('analisis')
+  getAnalisis() {
+    return this.productosService.getAnalisis();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productosService.findOne(+id);

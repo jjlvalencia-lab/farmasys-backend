@@ -13,4 +13,8 @@ export class CreateProductoDto {
   stockMaximo?: number;
   imagen?: string;
   categoria!: string;
+  enPromocion?: boolean;
+  descuento?: number;
+  promocionInicio?: string;
+  promocionFin?: string;
 }
