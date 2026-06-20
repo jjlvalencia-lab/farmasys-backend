@@ -15,6 +15,9 @@ import { VentasModule } from './ventas/ventas.module';
       database: 'farmasys_db',
       autoLoadEntities: true,
       synchronize: true,
+      extra: {
+        timezone: 'America/Guayaquil',
+      },
     }),
     ProductosModule,
     AuthModule,

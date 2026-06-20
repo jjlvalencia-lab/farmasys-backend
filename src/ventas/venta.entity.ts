@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { DetalleVenta } from './detalle-venta.entity';
 
 @Entity()
@@ -6,7 +6,7 @@ export class Venta {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @CreateDateColumn()
+  @Column({ type: 'timestamp' })
   fecha!: Date;
 
   @Column('decimal', { precision: 10, scale: 2 })

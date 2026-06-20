@@ -17,6 +17,13 @@ export class VentasService {
     private productosRepository: Repository<Producto>,
   ) {}
 
+  getFechaEcuador(): Date {
+    const ahora = new Date();
+    const offsetEcuador = -5 * 60; // UTC-5 en minutos
+    const fechaUTC = ahora.getTime() + (ahora.getTimezoneOffset() * 60000);
+    return new Date(fechaUTC + (offsetEcuador * 60000));
+  }
+
   async create(dto: CreateVentaDto): Promise<Venta> {
     for (const detalle of dto.detalles) {
       const producto = await this.productosRepository.findOne({ where: { id: detalle.productoId } });
@@ -26,6 +33,7 @@ export class VentasService {
     }
 
     const venta = this.ventasRepository.create({
+      fecha: this.getFechaEcuador(),
       total: dto.total,
       metodoPago: dto.metodoPago,
       entidadFinanciera: dto.entidadFinanciera,
