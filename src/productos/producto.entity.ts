@@ -23,13 +23,13 @@ export class Producto {
   @Column()
   lote!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'date', nullable: true })
   fechaElaboracion!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'date', nullable: true })
   fechaIngreso!: string;
 
-  @Column()
+  @Column({ type: 'date' })
   fechaCaducidad!: string;
 
   @Column({ default: 0 })

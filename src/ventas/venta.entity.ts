@@ -21,7 +21,7 @@ export class Venta {
   @Column({ nullable: true })
   tipoTarjeta!: string;
 
-  @Column({ nullable: true })
+  @Column('decimal', { precision: 10, scale: 2, nullable: true })
   recargoPago!: number;
 
   @Column({ nullable: true })

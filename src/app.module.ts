@@ -14,7 +14,7 @@ import { VentasModule } from './ventas/ventas.module';
       password: 'xavier444',
       database: 'farmasys_db',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       extra: {
         timezone: 'America/Guayaquil',
       },
