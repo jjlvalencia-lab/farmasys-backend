@@ -13,11 +13,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(username: string, password: string) {
+  async register(username: string, password: string, rol: string = 'empleado') {
     const existe = await this.usuariosRepository.findOne({ where: { username } });
     if (existe) throw new ConflictException('El usuario ya existe');
     const hash = await bcrypt.hash(password, 10);
-    const usuario = this.usuariosRepository.create({ username, password: hash });
+    const usuario = this.usuariosRepository.create({ username, password: hash, rol });
     await this.usuariosRepository.save(usuario);
     return { mensaje: 'Usuario registrado correctamente' };
   }
@@ -27,7 +27,7 @@ export class AuthService {
     if (!usuario) throw new UnauthorizedException('Credenciales incorrectas');
     const valido = await bcrypt.compare(password, usuario.password);
     if (!valido) throw new UnauthorizedException('Credenciales incorrectas');
-    const payload = { sub: usuario.id, username: usuario.username };
+    const payload = { sub: usuario.id, username: usuario.username, rol: usuario.rol };
     return { access_token: this.jwtService.sign(payload) };
   }
 }
