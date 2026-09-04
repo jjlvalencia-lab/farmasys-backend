@@ -1,23 +1,35 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
-import { json } from 'express';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(json({ limit: '10mb' }));
-  app.enableCors();
+  const config = app.get(ConfigService);
 
-  const config = new DocumentBuilder()
-    .setTitle('FarmaSys API')
-    .setDescription('API REST para el sistema de gestion de inventario farmaceutico')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+  // Seguridad HTTP headers
+  app.use(helmet());
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  // CORS - solo permite el frontend
+  app.enableCors({
+    origin: config.get<string>('FRONTEND_URL') || 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    credentials: true,
+  });
 
-  await app.listen(3000);
+  // Validación global de DTOs
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  );
+
+  const port = config.get<number>('PORT') || 3000;
+  await app.listen(port);
+  console.log(`🚀 FarmaSys backend corriendo en http://localhost:${port}`);
 }
 bootstrap();
