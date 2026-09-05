@@ -5,6 +5,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { ProductosModule } from './productos/productos.module';
 import { AuthModule } from './auth/auth.module';
 import { VentasModule } from './ventas/ventas.module';
+import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { VentasModule } from './ventas/ventas.module';
         limit: 60,
       },
     ]),
+    CloudinaryModule,
     ProductosModule,
     AuthModule,
     VentasModule,
