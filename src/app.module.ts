@@ -25,18 +25,19 @@ import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
         database: config.get<string>('DB_NAME'),
         autoLoadEntities: true,
         synchronize: false,
+        ssl: config.get<string>('DB_SSL') === 'true'
+          ? { rejectUnauthorized: false }
+          : false,
         extra: {
           timezone: 'America/Guayaquil',
         },
       }),
     }),
-    ThrottlerModule.forRoot([
-      {
-        name: 'global',
-        ttl: 60000,
-        limit: 60,
-      },
-    ]),
+    ThrottlerModule.forRoot([{
+      name: 'global',
+      ttl: 60000,
+      limit: 60,
+    }]),
     CloudinaryModule,
     ProductosModule,
     AuthModule,
