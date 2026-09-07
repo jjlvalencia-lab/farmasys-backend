@@ -1,3 +1,3 @@
 #!/bin/bash
 echo "🚀 Iniciando FarmaSys Backend..."
-node dist/main
+node dist/main.js
