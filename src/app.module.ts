@@ -24,7 +24,7 @@ import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: config.get<string>('NODE_ENV') === 'production' ? true : false,
+        synchronize: config.get<string>('NODE_ENV') === 'production',
         ssl: config.get<string>('DB_SSL') === 'true'
           ? { rejectUnauthorized: false }
           : false,
