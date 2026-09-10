@@ -1,6 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 
 @Entity()
+@Index(['categoria'])
+@Index(['fechaCaducidad'])
+@Index(['nombre'])
 export class Producto {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -43,6 +46,9 @@ export class Producto {
 
   @Column({ type: 'text', nullable: true })
   imagen!: string;
+
+  @Column({ type: 'text', nullable: true })
+  imagenUrl!: string;
 
   @Column({ default: 'Otros' })
   categoria!: string;

@@ -11,7 +11,7 @@ export class Usuario {
   @Column()
   password!: string;
 
-  @Column({ default: 'admin' })
+  @Column({ default: 'empleado' })
   rol!: string;
 
   @Column({ nullable: true })

@@ -1,9 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { Producto } from './producto.entity';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { Venta } from '../ventas/venta.entity';
+
+interface FindAllParams {
+  page?: number;
+  limit?: number;
+  categoria?: string;
+  busqueda?: string;
+}
 
 @Injectable()
 export class ProductosService {
@@ -14,8 +21,36 @@ export class ProductosService {
     private ventasRepository: Repository<Venta>,
   ) {}
 
-  findAll(): Promise<Producto[]> {
-    return this.productosRepository.find();
+  async findAll(params: FindAllParams = {}): Promise<Producto[] | { data: Producto[]; total: number; page: number; totalPages: number }> {
+    const { page, limit, categoria, busqueda } = params;
+
+    const where: any = {};
+    if (categoria && categoria !== 'Todos') {
+      where.categoria = categoria;
+    }
+    if (busqueda) {
+      where.nombre = Like(`%${busqueda}%`);
+    }
+
+    // Sin paginación — devuelve todos (compatibilidad con frontend actual)
+    if (!page || !limit) {
+      return this.productosRepository.find({ where, order: { nombre: 'ASC' } });
+    }
+
+    // Con paginación
+    const [data, total] = await this.productosRepository.findAndCount({
+      where,
+      order: { nombre: 'ASC' },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
+    return {
+      data,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: number): Promise<Producto> {
@@ -106,7 +141,8 @@ export class ProductosService {
 
     const productosAgotados = productos.filter(p => p.stock === 0).length;
     const enPromocion = productos.filter(p => p.enPromocion).length;
-    const stockBajo = productos.filter(p => p.stock > 0 && p.stock <= (p.stockMinimo || 10)).length;
+    const stockBajo = productos.filter(p =>
+      p.stock > 0 && p.stock <= (p.stockMinimo || 10)).length;
 
     return {
       totalInvertido: totalInvertido.toFixed(2),
