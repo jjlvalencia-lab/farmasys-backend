@@ -6,6 +6,7 @@ import { ProductosModule } from './productos/productos.module';
 import { AuthModule } from './auth/auth.module';
 import { VentasModule } from './ventas/ventas.module';
 import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -37,12 +38,12 @@ import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
       name: 'global',
       ttl: 60000,
       limit: 60,
-      },
-    ]),
+    }]),
     CloudinaryModule,
     ProductosModule,
     AuthModule,
     VentasModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
