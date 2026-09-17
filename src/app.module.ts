@@ -5,6 +5,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { ProductosModule } from './productos/productos.module';
 import { AuthModule } from './auth/auth.module';
 import { VentasModule } from './ventas/ventas.module';
+import { PedidosModule } from './pedidos/pedidos.module';
 import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
 import { AppController } from './app.controller';
 
@@ -29,20 +30,15 @@ import { AppController } from './app.controller';
         ssl: config.get<string>('DB_SSL') === 'true'
           ? { rejectUnauthorized: false }
           : false,
-        extra: {
-          timezone: 'America/Guayaquil',
-        },
+        extra: { timezone: 'America/Guayaquil' },
       }),
     }),
-    ThrottlerModule.forRoot([{
-      name: 'global',
-      ttl: 60000,
-      limit: 60,
-    }]),
+    ThrottlerModule.forRoot([{ name: 'global', ttl: 60000, limit: 60 }]),
     CloudinaryModule,
     ProductosModule,
     AuthModule,
     VentasModule,
+    PedidosModule,
   ],
   controllers: [AppController],
 })
