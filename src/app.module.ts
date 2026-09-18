@@ -6,6 +6,7 @@ import { ProductosModule } from './productos/productos.module';
 import { AuthModule } from './auth/auth.module';
 import { VentasModule } from './ventas/ventas.module';
 import { PedidosModule } from './pedidos/pedidos.module';
+import { MotoristasModule } from './motoristas/motoristas.module';
 import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
 import { AppController } from './app.controller';
 
@@ -39,6 +40,7 @@ import { AppController } from './app.controller';
     AuthModule,
     VentasModule,
     PedidosModule,
+    MotoristasModule,
   ],
   controllers: [AppController],
 })
